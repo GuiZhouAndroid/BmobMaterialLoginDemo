@@ -19,8 +19,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import arroon.android.login.R;
-import arroon.android.login.bmobobject.BmobUser;
-import arroon.android.login.utils.CCallBack;
 import arroon.android.login.utils.SimpleTransitionListener;
 
 public class Register extends AppCompatActivity {
@@ -82,18 +80,18 @@ public class Register extends AppCompatActivity {
                     Toast.makeText(Register.this, "密码不一致", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                BmobUser.register(username, password, new CCallBack() {
-                    @Override
-                    public void onSuccess(Object o) {
-                        Toast.makeText(Register.this, "注册成功", Toast.LENGTH_SHORT).show();
-                        animateRevealClose();
-                    }
-
-                    @Override
-                    public void onFailure(int code, String msg) {
-                        Toast.makeText(Register.this, msg, Toast.LENGTH_SHORT).show();
-                    }
-                });
+//                BmobUser.register(username, password, new CCallBack() {
+//                    @Override
+//                    public void onSuccess(Object o) {
+//                        Toast.makeText(Register.this, "注册成功", Toast.LENGTH_SHORT).show();
+//                        animateRevealClose();
+//                    }
+//
+//                    @Override
+//                    public void onFailure(int code, String msg) {
+//                        Toast.makeText(Register.this, msg, Toast.LENGTH_SHORT).show();
+//                    }
+//                });
             }
         });
     }
