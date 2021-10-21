@@ -1,0 +1,51 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rl_query_show"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.yj.system.activity.LoginSuccessActivity"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <TextView
+        android:paddingTop="50dp"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/tv_username"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        android:gravity="center"
+        android:textSize="35sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <com.yj.system.ui.Wave.WaveView
+        android:layout_alignParentBottom="true"
+        android:id="@+id/wave_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <LinearLayout
+        android:layout_centerInParent="true"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:src="@drawable/plus"
+            android:transitionName="loginFab"
+            app:fabSize="normal" />
+
+        <TextView
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:gravity="center"
+            android:textSize="35sp"
+            android:layout_below="@+id/fab"
+            android:text="开始打卡"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+</RelativeLayout>

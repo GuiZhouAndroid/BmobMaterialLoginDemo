@@ -1,4 +1,4 @@
-package arroon.android.login.utils;
+package com.yj.system.utils;
 
 import android.transition.Transition;
 import android.transition.Transition.TransitionListener;

@@ -1,4 +1,4 @@
-package arroon.android.login.utils;
+package com.yj.system.utils;
 
 /**
  * Created by act on 2017/5/22.
