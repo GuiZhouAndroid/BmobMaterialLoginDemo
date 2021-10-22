@@ -6,16 +6,18 @@
     tools:context="com.yj.system.activity.LoginSuccessActivity"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
-        android:paddingTop="50dp"
-        android:layout_centerHorizontal="true"
+    <com.yj.system.ui.Wave.MarqueeTextView
+        android:layout_marginTop="80dp"
         android:id="@+id/tv_username"
-        android:textStyle="bold"
-        android:textColor="#FFFFFF"
-        android:gravity="center"
-        android:textSize="35sp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="16dp"
+        android:textColor="#FFFFFF"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:scrollHorizontally="true"
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
     <com.yj.system.ui.Wave.WaveView
         android:layout_alignParentBottom="true"
