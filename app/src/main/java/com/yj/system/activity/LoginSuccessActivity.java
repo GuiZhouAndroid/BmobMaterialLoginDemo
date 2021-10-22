@@ -4,12 +4,15 @@ import android.app.ActivityOptions;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.transition.Explode;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.yj.system.ui.Wave.Wave;
@@ -18,6 +21,8 @@ import com.yj.system.utils.StatusBarUtils;
 import com.yj.system.utils.dialog.LoadingDialog;
 import com.yj.systemc.R;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
@@ -29,10 +34,13 @@ import java.util.Date;
  * @create 2021-10-21-21:56
  */
 public class LoginSuccessActivity extends AppCompatActivity implements View.OnClickListener {
+    private RelativeLayout rl_query_show;
     private WaveView wave_view;//背景动画
     private TextView tv_username, tv_yj; //叶静毕设Lable标签+跑马灯登录用户名
     private FloatingActionButton fab;//打卡动画按钮
     private long firstTime;//3s再按一次返回
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,10 +63,13 @@ public class LoginSuccessActivity extends AppCompatActivity implements View.OnCl
         explode.setDuration(500);
         getWindow().setExitTransition(explode);
         getWindow().setEnterTransition(explode);
+
+
     }
 
 
     private void initView() {
+        rl_query_show =findViewById(R.id.rl_query_show);
         tv_username = findViewById(R.id.tv_username);//跑马灯登录用户名
         wave_view = (WaveView) findViewById(R.id.wave_view);//背景动画
         fab = findViewById(R.id.fab);

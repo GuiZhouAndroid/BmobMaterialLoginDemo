@@ -3,18 +3,23 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/1/AndroidStudioProjects/BmobMaterialLoginDemo/app/src/main/res/layout/activity_login_success.xml" value="0.1" />
         <entry key="..\:/Users/ZSAndroid/Desktop/BmobMaterialLoginDemo/app/src/main/res/layout/activity_login.xml" value="0.2957427536231884" />
         <entry key="..\:/Users/ZSAndroid/Desktop/BmobMaterialLoginDemo/app/src/main/res/layout/activity_login_success.xml" value="0.22" />
         <entry key="..\:/Users/ZSAndroid/Desktop/BmobMaterialLoginDemo/app/src/main/res/layout/login.xml" value="0.28940217391304346" />
         <entry key="..\:/Users/ZSAndroid/Desktop/BmobMaterialLoginDemo/app/src/main/res/layout/register.xml" value="0.28940217391304346" />
         <entry key="..\:/Users/ZSAndroid/Desktop/BmobMaterialLoginDemo/app/src/main/res/layout/user.xml" value="0.28940217391304346" />
-        <entry key="..\:/Users/ZSAndroid/Desktop/StaffPunchSystem/app/src/main/res/layout/activity_login.xml" value="0.1765625" />
+        <entry key="..\:/Users/ZSAndroid/Desktop/StaffPunchSystem/app/src/main/res/drawable/bt_shape_2.xml" value="0.36256410256410254" />
+        <entry key="..\:/Users/ZSAndroid/Desktop/StaffPunchSystem/app/src/main/res/drawable/state_list_animator_z.xml" value="0.36256410256410254" />
+        <entry key="..\:/Users/ZSAndroid/Desktop/StaffPunchSystem/app/src/main/res/layout/activity_login.xml" value="0.33" />
         <entry key="..\:/Users/ZSAndroid/Desktop/StaffPunchSystem/app/src/main/res/layout/activity_login_success.xml" value="0.1765625" />
+        <entry key="..\:/Users/ZSAndroid/Desktop/StaffPunchSystem/app/src/main/res/layout/activity_punch.xml" value="0.3380208333333333" />
+        <entry key="..\:/Users/ZSAndroid/Desktop/StaffPunchSystem/app/src/main/res/layout/activity_super_login.xml" value="0.35208333333333336" />
+        <entry key="..\:/Users/ZSAndroid/Desktop/StaffPunchSystem/app/src/main/res/layout/activity_verify_admin.xml" value="0.35208333333333336" />
         <entry key="..\:/Users/ZSAndroid/Desktop/StaffPunchSystem/app/src/main/res/layout/login.xml" value="0.1765625" />
         <entry key="..\:/Users/ZSAndroid/Desktop/StaffPunchSystem/app/src/main/res/layout/login_dialog_item.xml" value="0.286231884057971" />
         <entry key="..\:/Users/ZSAndroid/Desktop/StaffPunchSystem/app/src/main/res/layout/register.xml" value="0.1765625" />
         <entry key="..\:/Users/ZSAndroid/Desktop/StaffPunchSystem/app/src/main/res/layout/user.xml" value="0.1765625" />
+        <entry key="..\:/Users/ZSAndroid/Desktop/StaffPunchSystem/app/src/main/res/xml/dimens.xml" value="0.35208333333333336" />
       </map>
     </option>
   </component>

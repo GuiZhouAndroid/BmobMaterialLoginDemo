@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#161717"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.yj.system.ui.Wave.PowerfulEditText
+        android:id="@+id/verify_query"
+        android:layout_width="@dimen/dp_300"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:hint="@string/verifyCode"
+        android:maxLength="10"
+        android:singleLine="true"
+        android:textColor="#FFFFFF"
+        android:textColorHint="@color/cal_stroke"
+        app:borderStyle="roundRect"
+        android:inputType="text"
+        app:clearDrawable="@drawable/edit_clear_all"
+        app:styleColor="#ffeb3b" />
+
+    <Button
+        android:id="@+id/btn_star_verify"
+        android:layout_width="@dimen/dp_150"
+        android:layout_height="@dimen/dp_50"
+        android:layout_below="@id/verify_query"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dp_30"
+        android:text="验证进入"
+        android:textColor="#101010"
+        android:textSize="@dimen/sp_17"
+        android:textStyle="bold" />
+</RelativeLayout>

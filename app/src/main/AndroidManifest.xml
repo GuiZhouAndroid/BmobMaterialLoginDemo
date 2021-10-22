@@ -38,8 +38,9 @@
         </activity>
 
         <activity android:name="com.yj.system.activity.LoginSuccessActivity"/>
-        <activity android:name="com.yj.system.activity.PunchActivity"/>
-
+        <activity android:name="com.yj.system.activity.PunchActivity" android:windowSoftInputMode="stateHidden"/>
+        <activity android:name="com.yj.system.activity.SuperLoginActivity"/>
+        <activity android:name="com.yj.system.activity.VerifyAdminActivity"/>
     </application>
 
 </manifest>

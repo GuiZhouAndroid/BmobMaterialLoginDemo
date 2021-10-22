@@ -9,14 +9,13 @@
     <TextView
         android:layout_marginTop="50dp"
         android:id="@+id/tv_yj"
-        android:layout_above="@id/tv_username"
         android:layout_centerHorizontal="true"
         android:textStyle="bold"
         android:textColor="#FFFFFF"
         android:gravity="center"
         android:textSize="25sp"
         android:text="六盘水师范叶静毕设作品"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
     <com.yj.system.ui.Wave.MarqueeTextView
@@ -33,10 +32,10 @@
         android:textStyle="bold" />
 
     <com.yj.system.ui.Wave.WaveView
-        android:layout_alignParentBottom="true"
         android:id="@+id/wave_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true" />
 
     <LinearLayout
         android:layout_centerInParent="true"

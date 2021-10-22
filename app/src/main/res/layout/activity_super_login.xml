@@ -3,21 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
+    android:layout_height="match_parent"
+    android:background="@drawable/bg1"
+    tools:context="com.yj.system.activity.SuperLoginActivity">
     <FrameLayout
-        android:layout_width="320dp"
-        android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:paddingTop="50dp">
-
+        android:paddingTop="70dp"
+        android:layout_width="320dp"
+        android:layout_height="400dp">
         <android.support.v7.widget.CardView
             android:id="@+id/cv_add"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
+            app:cardBackgroundColor="#323535"
             android:layout_marginTop="10dp"
-            app:cardBackgroundColor="#2ea67f"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="320dp"
             app:cardCornerRadius="6dp"
             app:cardElevation="3dp"
             app:cardUseCompatPadding="true">
@@ -25,20 +25,21 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:paddingBottom="18dp">
+                android:orientation="vertical">
+
                 <TextView
-                    android:gravity="center"
-                    android:id="@+id/tv_now_time"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:layout_marginTop="50dp"
+                    android:text="@string/register"
                     android:textColor="#fff"
                     android:textSize="16sp"
                     android:textStyle="bold" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
+                    android:layout_height="40dp"
                     android:layout_marginTop="10dp"
                     android:paddingStart="50dp"
                     android:paddingEnd="30dp">
@@ -50,73 +51,68 @@
                         android:theme="@style/TextLabel">
 
                         <EditText
-                            android:gravity="center"
-                            android:id="@+id/et_staff_name"
+                            android:id="@+id/et_admin_username"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/selector_bg_edit_2"
-                            android:hint="务必填写您的真实姓名"
+                            android:hint="管理员账户"
                             android:inputType="textPersonName"
-                            android:paddingTop="8dp"
                             android:paddingBottom="2dp"
                             android:textColor="#f0f7f4"
                             android:textCursorDrawable="@drawable/bg_input_cursor_2"
-                            android:textSize="18sp" />
+                            android:textSize="16sp" />
                     </android.support.design.widget.TextInputLayout>
                 </LinearLayout>
+
                 <LinearLayout
-                    android:id="@+id/ll_choose_dept"
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal"
                     android:paddingStart="50dp"
                     android:paddingEnd="30dp">
+
                     <android.support.design.widget.TextInputLayout
+
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColorHint="#f0f7f4"
                         android:theme="@style/TextLabel">
-                        <TextView
-                            android:id="@+id/tv_dept"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/iv_lps"
-                            android:layout_centerHorizontal="true"
-                            android:layout_gravity="center_horizontal"
-                            android:hint="点击选择您的部门类别"
-                            android:textColorHint="#FFFFFF"
-                            android:textColor="#ffffff"
-                            android:textSize="18sp"/>
-                        <View
-                            android:layout_marginTop="3dp"
-                            android:background="#FFFFFF"
+
+                        <EditText
+                            android:id="@+id/et_admin_password"
                             android:layout_width="match_parent"
-                            android:layout_height="0.7dp"/>
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/selector_bg_edit_2"
+                            android:hint="管理员密码"
+                            android:inputType="textPassword"
+                            android:paddingBottom="2dp"
+                            android:textColor="#f0f7f4"
+                            android:textCursorDrawable="@drawable/bg_input_cursor_2"
+                            android:textSize="16sp" />
                     </android.support.design.widget.TextInputLayout>
                 </LinearLayout>
+
                 <Button
-                    android:id="@+id/btn_play_card"
+                    android:id="@+id/bt_go_admin"
                     android:layout_width="150dp"
                     android:layout_height="50dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="20dp"
                     android:background="@drawable/bt_shape_2"
                     android:stateListAnimator="@drawable/state_list_animator_z"
-                    android:text="立即打卡"
-                    android:textColor="#2fa881"/>
+                    android:text="@string/go"
+                    android:textColor="#2fa881"></Button>
 
             </LinearLayout>
         </android.support.v7.widget.CardView>
-
         <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab"
+            android:id="@+id/fab_super"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal|top"
+            app:fabSize="normal"
+            app:backgroundTint="#0091EA"
             android:src="@drawable/plus_x"
             android:transitionName="loginFab"
-            app:fabSize="normal" />
+            android:layout_gravity="center_horizontal|top" />
     </FrameLayout>
-
-
 </RelativeLayout>
