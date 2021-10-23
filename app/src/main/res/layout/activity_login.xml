@@ -21,7 +21,7 @@
         android:layout_below="@+id/iv_lps"
         android:layout_centerHorizontal="true"
         android:layout_gravity="center_horizontal"
-        android:text="计算机科学与技术-2022届毕设系统"
+        android:text="数学与计算机科学学院2022届毕设作品"
         android:textColor="#ffffff"
         android:textSize="18sp"
         android:textStyle="bold" />

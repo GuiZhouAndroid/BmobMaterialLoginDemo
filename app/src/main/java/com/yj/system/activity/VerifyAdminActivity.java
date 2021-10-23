@@ -6,11 +6,13 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.transition.Explode;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.yj.system.ui.Wave.PowerfulEditText;
+import com.yj.system.utils.StatusBarUtils;
 import com.yj.systemc.R;
 
 /**
@@ -27,8 +29,13 @@ public class VerifyAdminActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_verify_admin);
+        //设置沉浸式状态栏
+        StatusBarUtils.fullScreen(this);
+        Explode explode = new Explode();
+        explode.setDuration(500);
+        getWindow().setExitTransition(explode);
+        getWindow().setEnterTransition(explode);
         verify_query = findViewById(R.id.verify_query);
-
         btn_star_verify = findViewById(R.id.btn_star_verify);
         btn_star_verify.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -36,7 +43,6 @@ public class VerifyAdminActivity extends AppCompatActivity {
                 String strContent =verify_query.getText().toString().trim();
                 if (strContent.equals("叶静")){
                     startActivity(new Intent(VerifyAdminActivity.this,SuperLoginActivity.class));
-                    LoginActivity.activity.finish();
                     finish();
                 }else {
                     verify_query.startShakeAnimation();
@@ -48,7 +54,6 @@ public class VerifyAdminActivity extends AppCompatActivity {
             }
         });
     }
-
 
     public void setSnackBarMessageTextColor(Snackbar snackbar, int color) {
         View view = snackbar.getView();

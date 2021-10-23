@@ -6,6 +6,19 @@
     android:layout_height="match_parent"
     android:background="@drawable/bg1"
     tools:context="com.yj.system.activity.SuperLoginActivity">
+
+    <top.defaults.view.DateTimePickerView
+        app:preferredMaxOffsetItemCount="3"
+        android:id="@+id/dateTimePickerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#000000"
+        app:autoFitSize="true"
+        app:minutesInterval="fifteen"
+        app:textColor="@color/colorAccent"
+        app:textSize="@dimen/sp_17"
+        app:type="dateTime" />
     <FrameLayout
         android:layout_centerInParent="true"
         android:paddingTop="70dp"
@@ -17,7 +30,7 @@
             android:layout_marginTop="10dp"
             android:layout_gravity="center_horizontal"
             android:layout_width="match_parent"
-            android:layout_height="320dp"
+            android:layout_height="280dp"
             app:cardCornerRadius="6dp"
             app:cardElevation="3dp"
             app:cardUseCompatPadding="true">
@@ -32,76 +45,43 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="50dp"
-                    android:text="@string/register"
+                    android:text="设置结束打卡时间"
                     android:textColor="#fff"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
                 <LinearLayout
+                    android:onClick="ll"
+                    android:id="@+id/ll_choose_end_time"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginTop="10dp"
-                    android:paddingStart="50dp"
-                    android:paddingEnd="30dp">
-
-                    <android.support.design.widget.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColorHint="#f0f7f4"
-                        android:theme="@style/TextLabel">
-
-                        <EditText
-                            android:id="@+id/et_admin_username"
+                    android:layout_height="60dp"
+                    android:orientation="vertical"
+                    android:layout_marginTop="30dp">
+                        <TextView
+                            android:gravity="center"
+                            android:id="@+id/tv_end_time"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/selector_bg_edit_2"
-                            android:hint="管理员账户"
-                            android:inputType="textPersonName"
-                            android:paddingBottom="2dp"
-                            android:textColor="#f0f7f4"
-                            android:textCursorDrawable="@drawable/bg_input_cursor_2"
-                            android:textSize="16sp" />
-                    </android.support.design.widget.TextInputLayout>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:orientation="horizontal"
-                    android:paddingStart="50dp"
-                    android:paddingEnd="30dp">
-
-                    <android.support.design.widget.TextInputLayout
-
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColorHint="#f0f7f4"
-                        android:theme="@style/TextLabel">
-
-                        <EditText
-                            android:id="@+id/et_admin_password"
+                            android:textColorHint="#00B8D4"
+                            android:textColor="#ffffff"
+                            android:textSize="18sp"/>
+                        <View
+                            android:layout_marginTop="3dp"
+                            android:background="#FFFFFF"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/selector_bg_edit_2"
-                            android:hint="管理员密码"
-                            android:inputType="textPassword"
-                            android:paddingBottom="2dp"
-                            android:textColor="#f0f7f4"
-                            android:textCursorDrawable="@drawable/bg_input_cursor_2"
-                            android:textSize="16sp" />
-                    </android.support.design.widget.TextInputLayout>
+                            android:layout_height="0.7dp"/>
                 </LinearLayout>
 
                 <Button
-                    android:id="@+id/bt_go_admin"
+                    android:id="@+id/bt_set_end_time"
                     android:layout_width="150dp"
                     android:layout_height="50dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="20dp"
                     android:background="@drawable/bt_shape_2"
                     android:stateListAnimator="@drawable/state_list_animator_z"
-                    android:text="@string/go"
-                    android:textColor="#2fa881"></Button>
+                    android:text="立即生效"
+                    android:textColor="#2fa881"/>
 
             </LinearLayout>
         </android.support.v7.widget.CardView>

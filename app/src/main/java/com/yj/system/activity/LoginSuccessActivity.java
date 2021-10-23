@@ -39,7 +39,7 @@ public class LoginSuccessActivity extends AppCompatActivity implements View.OnCl
     private TextView tv_username, tv_yj; //叶静毕设Lable标签+跑马灯登录用户名
     private FloatingActionButton fab;//打卡动画按钮
     private long firstTime;//3s再按一次返回
-
+    private String loginUserName;
 
 
     @Override
@@ -63,8 +63,6 @@ public class LoginSuccessActivity extends AppCompatActivity implements View.OnCl
         explode.setDuration(500);
         getWindow().setExitTransition(explode);
         getWindow().setEnterTransition(explode);
-
-
     }
 
 
@@ -116,7 +114,9 @@ public class LoginSuccessActivity extends AppCompatActivity implements View.OnCl
                 //动画过渡开始
                 ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(LoginSuccessActivity.this, fab, fab.getTransitionName());
                 //同时执行跳转
-                startActivity(new Intent(LoginSuccessActivity.this, PunchActivity.class), options.toBundle());
+                Intent intent = new Intent(new Intent(LoginSuccessActivity.this, PunchActivity.class));
+                intent.putExtra("MyName",loginUserName);
+                startActivity(intent, options.toBundle());
                 break;
         }
     }
@@ -127,7 +127,7 @@ public class LoginSuccessActivity extends AppCompatActivity implements View.OnCl
      * @param tv
      */
     private void getDate(TextView tv) {
-        String loginUserName = getIntent().getStringExtra("username");
+        loginUserName = getIntent().getStringExtra("username");
         Date d = new Date();
         if (d.getHours() < 4) {
             tv.setText("                 早点休息哟~，" + loginUserName + "                 ");
@@ -171,5 +171,9 @@ public class LoginSuccessActivity extends AppCompatActivity implements View.OnCl
     public void setSnackBarMessageTextColor(Snackbar snackbar, int color) {
         View view = snackbar.getView();
         ((TextView) view.findViewById(R.id.snackbar_text)).setTextColor(color);
+    }
+
+    public void tvGoGW(View view) {
+        startActivity(new Intent(this,InSchoolActivity.class));
     }
 }

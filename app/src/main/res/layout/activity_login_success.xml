@@ -14,7 +14,7 @@
         android:textColor="#FFFFFF"
         android:gravity="center"
         android:textSize="25sp"
-        android:text="六盘水师范叶静毕设作品"
+        android:text="计算机科学与技术3班——叶静"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
@@ -51,7 +51,6 @@
             android:src="@drawable/plus"
             android:transitionName="loginFab"
             app:fabSize="normal" />
-
         <TextView
             android:textStyle="bold"
             android:textColor="#FFFFFF"
@@ -61,5 +60,26 @@
             android:text="开始打卡"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
+    </LinearLayout>
+    <LinearLayout
+        android:paddingBottom="@dimen/dp_200"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:onClick="tvGoGW"
+            android:id="@+id/tv_go_gw"
+            android:textStyle="italic"
+            android:textColor="#FFFFFF"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:text="点击此处进入系统网站"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <View
+            android:background="#C51162"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
     </LinearLayout>
 </RelativeLayout>

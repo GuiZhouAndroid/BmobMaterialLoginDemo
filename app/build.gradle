@@ -38,4 +38,6 @@ dependencies {
 
     //鸿洋okhttp工具类
     implementation 'com.zhy:okhttputils:2.6.2'
+    //时间选择器
+    implementation 'com.github.duanhong169:picker-view:1.0.1'
 }

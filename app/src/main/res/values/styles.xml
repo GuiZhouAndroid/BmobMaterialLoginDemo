@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
@@ -22,5 +22,13 @@
 
     <style name="dialog" parent="@android:style/Theme.Dialog">
         <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
+    <!--提高应用启动速度_解决APP启动时闪白屏-->
+    <style name="LaunchTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@drawable/fullscreen</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+        <!-- Android 5.0+，设置状态栏全透明透明 -->
+        <item name="android:statusBarColor" tools:targetApi="l">@android:color/transparent</item>
     </style>
 </resources>

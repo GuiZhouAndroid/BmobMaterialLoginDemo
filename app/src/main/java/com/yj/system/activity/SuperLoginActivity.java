@@ -2,17 +2,14 @@ package com.yj.system.activity;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
-import android.transition.Explode;
 import android.transition.Transition;
 import android.transition.TransitionInflater;
 import android.util.Log;
@@ -20,8 +17,8 @@ import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.animation.AccelerateInterpolator;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.franmontiel.persistentcookiejar.ClearableCookieJar;
 import com.franmontiel.persistentcookiejar.PersistentCookieJar;
@@ -35,6 +32,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.Locale;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -43,6 +43,8 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import top.defaults.logger.Logger;
+import top.defaults.view.DateTimePickerView;
 
 /**
  * created by on 2021/10/22
@@ -53,12 +55,14 @@ import okhttp3.Response;
  */
 public class SuperLoginActivity extends AppCompatActivity {
     private static final String TAG = "SuperLoginActivity";
-    private CardView cvAdd;
-    private FloatingActionButton fab_super;
-    private EditText et_admin_username,et_admin_password;
-    private Button bt_go_admin;
-    private String username,password;
-    private Call call;
+    private CardView cvAdd;//卡片布局，用于动画过渡
+    private FloatingActionButton fab_super;//浮动按钮
+    private Button bt_set_end_time;//立即生效
+    private Call call;//okhttp3网络请求回调
+    private DateTimePickerView dateTimePickerView;//填写资料的时间日期选择器
+    private TextView tv_end_time;//选择时间
+    private String year,month,day,hours,minute;
+    private int type = DateTimePickerView.TYPE_DATE_HOUR_MINUTE;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -67,27 +71,72 @@ public class SuperLoginActivity extends AppCompatActivity {
         StatusBarUtils.fullScreen(this);
         ShowEnterAnimation();
         initView();
+        initPickerTime();//滑动选择时间器
+
+    }
+
+    private void initView() {
+        cvAdd = findViewById(R.id.cv_add);
+        fab_super = findViewById(R.id.fab_super);
+        tv_end_time = findViewById(R.id.tv_end_time);
+        dateTimePickerView = findViewById(R.id.dateTimePickerView);
+        bt_set_end_time = findViewById(R.id.bt_set_end_time);
+        bt_set_end_time.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!tv_end_time.getText().toString().trim().isEmpty()){
+                    doSetData();//立即设置生效
+                }else {
+                    Snackbar snackbar = Snackbar.make(bt_set_end_time, "请重新选择打卡时间", Snackbar.LENGTH_LONG);
+                    //设置Snackbar上提示的字体颜色
+                    setSnackBarMessageTextColor(snackbar, Color.parseColor("#FFFFFF"));
+                    snackbar.show();
+                }
+            }
+        });
+
         fab_super.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 animateRevealClose();
             }
         });
+
+    }
+    /**
+     * 选择时间
+     */
+    private void initPickerTime() {
+        dateTimePickerView.setCurved(true);
+        dateTimePickerView.setType(type);
+        if (dateTimePickerView.getTimePickerView() != null) {
+            dateTimePickerView.getTimePickerView().setTextColor(Color.MAGENTA);
+        }
+        dateTimePickerView.setStartDate(new GregorianCalendar(2017, 1, 27, 21, 30));
+        dateTimePickerView.setSelectedDate(Calendar.getInstance());
+        dateTimePickerView.setEndDate(new GregorianCalendar(2099, 12, 31));
+        dateTimePickerView.setOnSelectedDateChangedListener(date -> {
+            String dateString = getDateString(date);//获取动态滑动显示的时间
+            tv_end_time.setText(dateString);//设置时间显示到TextView
+            //准备网络请求参数
+            year = dateString.substring(0,4);//取年的数字
+            month = dateString.substring(5,7);//取月的数字
+            day = dateString.substring(8,10);//取日的数字
+            hours = dateString.substring(11,13);//取小时的数字
+            minute = dateString.substring(14,16);  //取分钟的数字
+            Logger.d("new date: %s", dateString);
+        });
+
+        tv_end_time.setText(getDateString(dateTimePickerView.getSelectedDate()));
     }
 
-    private void initView() {
-        fab_super = findViewById(R.id.fab_super);
-        cvAdd = findViewById(R.id.cv_add);
-        et_admin_username = findViewById(R.id.et_admin_username);
-        et_admin_password = findViewById(R.id.et_admin_password);
-        bt_go_admin = findViewById(R.id.bt_go_admin);
-
-        bt_go_admin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Login();
-            }
-        });
+    private String getDateString(Calendar date) {
+        int year = date.get(Calendar.YEAR);
+        int month = date.get(Calendar.MONTH);
+        int dayOfMonth = date.get(Calendar.DAY_OF_MONTH);
+        int hour = date.get(Calendar.HOUR_OF_DAY);
+        int minute = date.get(Calendar.MINUTE);
+        return String.format(Locale.getDefault(), "%d年%02d月%02d日%02d时%02d分", year, month + 1, dayOfMonth, hour, minute);
     }
 
     private void ShowEnterAnimation() {
@@ -155,6 +204,7 @@ public class SuperLoginActivity extends AppCompatActivity {
                 super.onAnimationEnd(animation);
                 fab_super.setImageResource(R.drawable.plus);
                 SuperLoginActivity.super.onBackPressed();
+
             }
 
             @Override
@@ -169,41 +219,24 @@ public class SuperLoginActivity extends AppCompatActivity {
         animateRevealClose();
     }
 
-    private void Login() {
-        username = et_admin_username.getText().toString().trim();
-        password = et_admin_password.getText().toString().trim();
-        if (username.isEmpty()) {
-            Snackbar snackbar = Snackbar.make(bt_go_admin, "请输入用户名~", Snackbar.LENGTH_LONG);
-            //设置Snackbar上提示的字体颜色
-            setSnackBarMessageTextColor(snackbar, Color.parseColor("#FFFFFF"));
-            snackbar.show();
 
-            return;
-        }
-        if (password.isEmpty()) {
-            Snackbar snackbar = Snackbar.make(bt_go_admin, "请输入密码~", Snackbar.LENGTH_LONG);
-            //设置Snackbar上提示的字体颜色
-            setSnackBarMessageTextColor(snackbar, Color.parseColor("#FFFFFF"));
-            snackbar.show();
-            return;
-        }
-        //开始登录
-        doLoginSystem();
-    }
-
-    private void doLoginSystem() {
+    private void doSetData() {
         LoadingDialog.showSimpleLD(SuperLoginActivity.this,getString(R.string.loading));
         ClearableCookieJar cookie = new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(SuperLoginActivity.this));
         Log.i(TAG, "cookie============: " + cookie);
         //1.创建OkHttpClient对象
         OkHttpClient mOkHttpClient = new OkHttpClient.Builder().cookieJar(cookie).build();
         RequestBody requestBody = new FormBody.Builder()
-                .add("username", username)//传递键值对参数
-                .add("pass", password)
+                .add("endYear", year)//传递键值对参数
+                .add("endMonth", month)
+                .add("endDay", day)//传递键值对参数
+                .add("endHours", hours)
+                .add("endMinute", minute)//传递键值对参数
+                .add("endSecond", "00")
                 .build();
         //3.创建Request对象，设置URL地址，将RequestBody作为post方法的参数传入
         final Request request = new Request.Builder()
-                .url("http://192.168.157.29:8083/mangage/login.io")
+                .url("http://192.168.157.29:8083/work/setPlayCardEndTime")
                 .post(requestBody)
                 .build();
 
@@ -220,30 +253,21 @@ public class SuperLoginActivity extends AppCompatActivity {
                     try {
                         JSONObject jsonObject = new JSONObject(res);
                         Log.i(TAG, "结果===: " + res);
-                        if (jsonObject.optString("state").equals("1") && jsonObject.optString("msg").equals("登陆请求成功")) {
+                        if (jsonObject.optString("state").equals("1") && jsonObject.optString("msg").equals("设置结束打卡时间成功")) {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    LoadingDialog.closeSimpleLD();
-                                    Explode explode = new Explode();
-                                    explode.setDuration(500);
-                                    getWindow().setExitTransition(explode);
-                                    getWindow().setEnterTransition(explode);
-                                    ActivityOptionsCompat oc2 = ActivityOptionsCompat.makeSceneTransitionAnimation(SuperLoginActivity.this);
-                                    Intent i2 = new Intent(SuperLoginActivity.this,LoginSuccessActivity.class);
-                                    i2.putExtra("username",username);
-                                    startActivity(i2, oc2.toBundle());
-                                    finish();
+                                    animateRevealClose();
+                                    Toast.makeText(SuperLoginActivity.this, jsonObject.optString("msg")+"，"+jsonObject.optString("data"), Toast.LENGTH_SHORT).show();
                                 }
                             });
 
-                        } else if (jsonObject.optString("state").equals("0") && jsonObject.optString("msg").equals("用户不存在")) {
-                            Snackbar snackbar = Snackbar.make(bt_go_admin, "用户名和密码不匹配！", Snackbar.LENGTH_LONG);
+                        } else if (jsonObject.optString("state").equals("0") && jsonObject.optString("msg").equals("时间错误")) {
+                            Snackbar snackbar = Snackbar.make(bt_set_end_time, jsonObject.optString("data"), Snackbar.LENGTH_LONG);
                             //设置Snackbar上提示的字体颜色
                             setSnackBarMessageTextColor(snackbar, Color.parseColor("#FFFFFF"));
                             snackbar.show();
                             LoadingDialog.closeSimpleLD();
-
 
                         }
                     } catch (JSONException e) {
@@ -256,7 +280,7 @@ public class SuperLoginActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                Snackbar snackbar = Snackbar.make(bt_go_admin, "登录失败，服务器连接超时！", Snackbar.LENGTH_LONG);
+                Snackbar snackbar = Snackbar.make(bt_set_end_time, "设置打卡时间出错，请检查服务器运行环境", Snackbar.LENGTH_LONG);
                 //设置Snackbar上提示的字体颜色
                 setSnackBarMessageTextColor(snackbar, Color.parseColor("#FFFFFF"));
                 snackbar.show();
@@ -270,4 +294,5 @@ public class SuperLoginActivity extends AppCompatActivity {
         View view = snackbar.getView();
         ((TextView) view.findViewById(R.id.snackbar_text)).setTextColor(color);
     }
+
 }

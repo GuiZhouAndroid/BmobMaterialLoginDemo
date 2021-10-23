@@ -95,6 +95,7 @@ public class PunchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_punch);
         new TimeThread().start();
         StatusBarUtils.fullScreen(this);
+        strStaffName = getIntent().getStringExtra("MyName");//获取已登录的员工名
         initView();
         setListener();
 
@@ -106,6 +107,7 @@ public class PunchActivity extends AppCompatActivity {
         cvAdd = findViewById(R.id.cv_add);
         tv_now_time = findViewById(R.id.tv_now_time);
         et_staff_name = findViewById(R.id.et_staff_name);
+        et_staff_name.setText(strStaffName);//默认设置获取已登录的员工名
         ll_choose_dept = findViewById(R.id.ll_choose_dept);
         tv_dept = findViewById(R.id.tv_dept);
         btn_play_card = findViewById(R.id.btn_play_card);
@@ -200,15 +202,14 @@ public class PunchActivity extends AppCompatActivity {
      * 开始打卡
      */
     private void doPlayCard() {
-
-        LoadingDialog.showSimpleLD(PunchActivity.this, getString(R.string.loading));
+        LoadingDialog.showSimpleLD(PunchActivity.this, getString(R.string.playing));
         ClearableCookieJar cookie = new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(PunchActivity.this));
         Log.i(TAG, "cookie============: " + cookie);
         //1.创建OkHttpClient对象
         OkHttpClient mOkHttpClient = new OkHttpClient.Builder().cookieJar(cookie).build();
         RequestBody requestBody = new FormBody.Builder()
-                .add("empName", String.valueOf(et_staff_name))//传递键值对参数
-                .add("dept", String.valueOf(tv_dept))
+                .add("empName", strStaffName)//传递键值对参数
+                .add("dept", strDeptValue)
                 .build();
         //3.创建Request对象，设置URL地址，将RequestBody作为post方法的参数传入
         final Request request = new Request.Builder()
@@ -235,104 +236,91 @@ public class PunchActivity extends AppCompatActivity {
                             setSnackBarMessageTextColor(snackbar, Color.parseColor("#FFFFFF"));
                             snackbar.show();
                             LoadingDialog.closeSimpleLD();
-                        } else if (jsonObject.optString("state").equals("0") && jsonObject.optString("msg").equals("管理员未启用打卡功能")) {
+                        }
+                        if (jsonObject.optString("state").equals("0") && jsonObject.optString("msg").equals("管理员未启用打卡功能")) {
                             Snackbar snackbar = Snackbar.make(btn_play_card, jsonObject.optString("msg")+","+jsonObject.optString("data"), Snackbar.LENGTH_LONG);
                             //设置Snackbar上提示的字体颜色
                             setSnackBarMessageTextColor(snackbar, Color.parseColor("#FFFFFF"));
                             snackbar.show();
                             LoadingDialog.closeSimpleLD();
 
-                        } else if (jsonObject.optString("state").equals("0") && jsonObject.optString("msg").equals("早上打卡失败")) {
+                        }
+                        if (jsonObject.optString("state").equals("0") && jsonObject.optString("msg").equals("早上打卡失败")) {
                             Snackbar snackbar = Snackbar.make(btn_play_card, jsonObject.optString("msg")+","+jsonObject.optString("data"), Snackbar.LENGTH_LONG);
                             //设置Snackbar上提示的字体颜色
                             setSnackBarMessageTextColor(snackbar, Color.parseColor("#FFFFFF"));
                             snackbar.show();
                             LoadingDialog.closeSimpleLD();
 
-                        }else if (jsonObject.optString("state").equals("0") && jsonObject.optString("msg").equals("早上中午失败")){
+                        }
+                        if (jsonObject.optString("state").equals("0") && jsonObject.optString("msg").equals("中午打卡失败")){
                             Snackbar snackbar = Snackbar.make(btn_play_card, jsonObject.optString("msg")+","+jsonObject.optString("data"), Snackbar.LENGTH_LONG);
                             //设置Snackbar上提示的字体颜色
                             setSnackBarMessageTextColor(snackbar, Color.parseColor("#FFFFFF"));
                             snackbar.show();
                             LoadingDialog.closeSimpleLD();
-                        }else if (jsonObject.optString("state").equals("0") && jsonObject.optString("msg").equals("下午中午失败")){
+                        }
+                        if (jsonObject.optString("state").equals("0") && jsonObject.optString("msg").equals("下午打卡失败")){
                             Snackbar snackbar = Snackbar.make(btn_play_card, jsonObject.optString("msg")+","+jsonObject.optString("data"), Snackbar.LENGTH_LONG);
                             //设置Snackbar上提示的字体颜色
                             setSnackBarMessageTextColor(snackbar, Color.parseColor("#FFFFFF"));
                             snackbar.show();
                             LoadingDialog.closeSimpleLD();
-                        }else if (jsonObject.optString("state").equals("0") && jsonObject.optString("msg").equals("晚上中午失败")){
+                        }
+                        if (jsonObject.optString("state").equals("0") && jsonObject.optString("msg").equals("晚上打卡失败")){
                             Snackbar snackbar = Snackbar.make(btn_play_card, jsonObject.optString("msg")+","+jsonObject.optString("data"), Snackbar.LENGTH_LONG);
                             //设置Snackbar上提示的字体颜色
                             setSnackBarMessageTextColor(snackbar, Color.parseColor("#FFFFFF"));
                             snackbar.show();
                             LoadingDialog.closeSimpleLD();
-                        }else if (jsonObject.optString("state").equals("1") && jsonObject.optString("msg").equals("早上成功打卡")){
-                            Toast.makeText(PunchActivity.this, jsonObject.optString("msg"), Toast.LENGTH_SHORT).show();
+                        }
+                        if (jsonObject.optString("state").equals("1") && jsonObject.optString("msg").equals("早上成功打卡")){
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    LoadingDialog.closeSimpleLD();
-                                    Explode explode = new Explode();
-                                    explode.setDuration(500);
-                                    getWindow().setExitTransition(explode);
-                                    getWindow().setEnterTransition(explode);
-                                    ActivityOptionsCompat oc2 = ActivityOptionsCompat.makeSceneTransitionAnimation(PunchActivity.this);
-                                    Intent i2 = new Intent(PunchActivity.this, LoginSuccessActivity.class);
-                                    startActivity(i2, oc2.toBundle());
-                                    finish();
+                                    animateRevealClose();
+                                    Toast.makeText(PunchActivity.this, jsonObject.optString("msg"), Toast.LENGTH_SHORT).show();
                                 }
                             });
-                        }else if (jsonObject.optString("state").equals("1") && jsonObject.optString("msg").equals("中午成功打卡")){
-                            Toast.makeText(PunchActivity.this, jsonObject.optString("msg"), Toast.LENGTH_SHORT).show();
+                        }
+                        if (jsonObject.optString("state").equals("1") && jsonObject.optString("msg").equals("中午成功打卡")){
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    LoadingDialog.closeSimpleLD();
-                                    Explode explode = new Explode();
-                                    explode.setDuration(500);
-                                    getWindow().setExitTransition(explode);
-                                    getWindow().setEnterTransition(explode);
-                                    ActivityOptionsCompat oc2 = ActivityOptionsCompat.makeSceneTransitionAnimation(PunchActivity.this);
-                                    Intent i2 = new Intent(PunchActivity.this, LoginSuccessActivity.class);
-                                    startActivity(i2, oc2.toBundle());
-                                    finish();
+                                    animateRevealClose();
+                                    Toast.makeText(PunchActivity.this, jsonObject.optString("msg"), Toast.LENGTH_SHORT).show();
                                 }
                             });
-                        }else if (jsonObject.optString("state").equals("1") && jsonObject.optString("msg").equals("下午成功打卡")){
-                            Toast.makeText(PunchActivity.this, jsonObject.optString("msg"), Toast.LENGTH_SHORT).show();
+                        }
+                        if (jsonObject.optString("state").equals("1") && jsonObject.optString("msg").equals("下午成功打卡")){
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    LoadingDialog.closeSimpleLD();
-                                    Explode explode = new Explode();
-                                    explode.setDuration(500);
-                                    getWindow().setExitTransition(explode);
-                                    getWindow().setEnterTransition(explode);
-                                    ActivityOptionsCompat oc2 = ActivityOptionsCompat.makeSceneTransitionAnimation(PunchActivity.this);
-                                    Intent i2 = new Intent(PunchActivity.this, LoginSuccessActivity.class);
-                                    startActivity(i2, oc2.toBundle());
-                                    finish();
+                                    animateRevealClose();
+                                    Toast.makeText(PunchActivity.this, jsonObject.optString("msg"), Toast.LENGTH_SHORT).show();
                                 }
                             });
-                        }else if (jsonObject.optString("state").equals("1") && jsonObject.optString("msg").equals("晚上成功打卡")){
-                            Toast.makeText(PunchActivity.this, jsonObject.optString("msg"), Toast.LENGTH_SHORT).show();
+                        }
+                        if (jsonObject.optString("state").equals("1") && jsonObject.optString("msg").equals("晚上成功打卡")){
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    LoadingDialog.closeSimpleLD();
-                                    Explode explode = new Explode();
-                                    explode.setDuration(500);
-                                    getWindow().setExitTransition(explode);
-                                    getWindow().setEnterTransition(explode);
-                                    ActivityOptionsCompat oc2 = ActivityOptionsCompat.makeSceneTransitionAnimation(PunchActivity.this);
-                                    Intent i2 = new Intent(PunchActivity.this, LoginSuccessActivity.class);
-                                    startActivity(i2, oc2.toBundle());
-                                    finish();
+                                    animateRevealClose();
+                                    Toast.makeText(PunchActivity.this, jsonObject.optString("msg"), Toast.LENGTH_SHORT).show();
                                 }
                             });
                         }
                     } catch (JSONException e) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Snackbar snackbar = Snackbar.make(btn_play_card, "本次打卡已结束,下次记得提前哟~！", Snackbar.LENGTH_LONG);
+                                //设置Snackbar上提示的字体颜色
+                                setSnackBarMessageTextColor(snackbar, Color.parseColor("#FFFFFF"));
+                                snackbar.show();
+                                LoadingDialog.closeSimpleLD();
+                            }
+                        });
                         e.printStackTrace();
                     }
                 } else {
@@ -342,7 +330,7 @@ public class PunchActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                Snackbar snackbar = Snackbar.make(btn_play_card, "登录失败，服务器连接超时！", Snackbar.LENGTH_LONG);
+                Snackbar snackbar = Snackbar.make(btn_play_card, "打卡失败，服务器连接错误！", Snackbar.LENGTH_LONG);
                 //设置Snackbar上提示的字体颜色
                 setSnackBarMessageTextColor(snackbar, Color.parseColor("#FFFFFF"));
                 snackbar.show();

@@ -65,8 +65,10 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         StatusBarUtils.fullScreen(this);
+        initData();
         initView();
         setListener();
+
     }
 
     private void initView() {
@@ -79,7 +81,17 @@ public class LoginActivity extends AppCompatActivity {
 //        cv = findViewById(R.id.cv);
 //        fab = findViewById(R.id.fab);
     }
-
+    /**
+     * 页面加载+准备数据
+     */
+    private void initData() {
+        //设置沉浸式状态栏
+        StatusBarUtils.fullScreen(this);
+        Explode explode = new Explode();
+        explode.setDuration(500);
+        getWindow().setExitTransition(explode);
+        getWindow().setEnterTransition(explode);
+    }
     private void setListener() {
         btGo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,10 +111,11 @@ public class LoginActivity extends AppCompatActivity {
         fab1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getWindow().setExitTransition(null);
-                getWindow().setEnterTransition(null);
+                //动画过渡开始
                 ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(LoginActivity.this, fab1, fab1.getTransitionName());
-                startActivity(new Intent(LoginActivity.this, VerifyAdminActivity.class), options.toBundle());
+                //同时执行跳转
+                Intent intent = new Intent(new Intent(LoginActivity.this, VerifyAdminActivity.class));
+                startActivity(intent, options.toBundle());
             }
         });
     }
@@ -196,7 +209,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                Snackbar snackbar = Snackbar.make(btGo, "登录失败，服务器连接超时！", Snackbar.LENGTH_LONG);
+                Snackbar snackbar = Snackbar.make(btGo, "登录失败，服务器连接错误！", Snackbar.LENGTH_LONG);
                 //设置Snackbar上提示的字体颜色
                 setSnackBarMessageTextColor(snackbar, Color.parseColor("#FFFFFF"));
                 snackbar.show();
@@ -217,7 +230,9 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        if (call.isExecuted())
         call.cancel();
+//        if (call.isExecuted())
         LoadingDialog.disDialog();
     }
 }
